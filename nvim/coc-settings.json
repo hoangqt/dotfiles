@@ -1,0 +1,79 @@
+{
+  "languageserver": {
+    "terraform": {
+      "command": "terraform-ls",
+      "args": ["serve"],
+      "filetypes": ["terraform", "tf"],
+      "initializationOptions": {}
+    },
+    "ocaml-lsp": {
+      "command": "opam",
+      "args": ["config", "exec", "--", "ocamllsp"],
+      "filetypes": ["ocaml", "reason"]
+    },
+    "racket": {
+      "command": "racket",
+      "args": [
+        "--lib",
+        "racket-langserver"
+      ],
+      "filetypes": [
+        "scheme", "racket"
+      ]
+    },
+    "haskell": {
+      "command": "haskell-language-server-wrapper",
+      "args": ["--lsp"],
+      "rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml"],
+      "filetypes": ["haskell", "lhaskell"]
+    },
+    "zig": {
+      "command": "zls",
+      "filetypes": ["zig", "zon"]
+    },
+    "awk": {
+      "command": "awk-language-server",
+      "args": [],
+      "filetypes": ["awk"]
+    },
+    "erlang": {
+      "command": "erlang_ls",
+      "filetypes": ["erlang"]
+    },
+    "elixirLS": {
+      "command": "/opt/homebrew/Cellar/elixir-ls/0.17.9/libexec/language_server.sh",
+      "filetypes": ["elixir", "eelixir"]
+    },
+    "kotlin": {
+      "command": "~/kotlinls/server/bin/kotlin-language-server",
+      "filetypes": ["kotlin"]
+    },
+    "go": {
+      "command": "gopls",
+      "rootPatterns": ["go.work", "go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"],
+      "initializationOptions": {
+        "usePlaceholders": true
+      }
+    }
+  },
+  "Lua.workspace.preloadFileSize": 200,
+  "coc.source.emoji.filetypes": null,
+  "inlayHint.enable": false,
+  "inlayHint.display": false,
+  "python.linting.pylintEnabled": true,
+  "snippets.ultisnips.pythonPrompt": false,
+  "perl.navigator.enable": true,
+  "perl.navigator.serverPath": "$HOME/.nvm/versions/node/v20.9.0/lib/node_modules/perlnavigator-server/out/server.js",
+  "coc.source.vimtex.filetypes": [
+    "tex",
+    "plaintex"
+  ],
+  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx4g -Xms2g -Xlog:disable",
+  "java.imports.gradle.wrapper.checksums": [
+    {
+      "sha256": "01f2365fb6d728a44b750e16b28cc23a1d5aefd199289978c3fffedf538d3bfa",
+      "allowed": true
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+# ~/Library/Application\ Support/com.mitchellh.ghostty/config
+theme = catppuccin-macchiato
+font-family = "JetBrainsMono Nerd Font"
+font-size = 15
+cursor-style = bar
+# font-thicken will bolden and emphasize the characters
+font-thicken = true
+copy-on-select = clipboard
+window-title-font-family = "JetBrainsMono Nerd Font"
+working-directory = home
+window-new-tab-position = end
+# Launch ghostty in maximized mode
+window-width = 2048
+window-height = 2048

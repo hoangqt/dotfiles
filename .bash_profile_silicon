@@ -1,0 +1,175 @@
+export LANG="en_US.UTF-8"
+
+export GRADLE_OPTS="-Dcom.ibm.jsse2.overrideDefaultTLS=true -Xms128m -Xmx1024m -Xss8m"
+export IBM_JAVA_OPTIONS="-Dcom.ibm.jsse2.overrideDefaultTLS=true"
+
+export GOPATH="$HOME/gocmd"
+export GOBIN="$GOPATH/bin"
+
+# Use nvim as git default editor
+export EDITOR=/opt/homebrew/bin/nvim
+
+# mactex /Library/Tex/texbin
+PATH="/Library/Tex/texbin:$HOME/.cargo/bin:/opt/homebrew/anaconda3/bin:/usr/local/bin:/sbin:$HOME/ziglangserver"
+# Expose gnu grep and deps as normal names instead of ggrep /usr/local/opt/grep/libexec/gnubin
+export PATH="/opt/homebrew/bin:/opt/homebrew/opt/llvm/bin:$HOME/.local/bin:$GOBIN:$HOME/staging:/bin:/usr/bin:/usr/sbin:$HOME/.jenv/bin:$PATH"
+
+# Aliases
+alias vim='nvim'
+alias vi='nvim'
+alias cat='bat'
+alias preview="fzf --preview 'bat --color always {}'"
+alias j=z
+
+# git aliases
+alias gl='git log --no-merges --pretty=format:"%C(yellow)%h %C(green)%ar %C(blue)%an %C(reset)%s" --decorate'
+
+# Workaround https://github.com/alacritty/alacritty/issues/3962
+# If below doesn't work, ssh from tmux session
+alias ssh="TERM=xterm-256color $(which ssh)"
+
+# Node version manager
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+# ---
+# copy 'n paste from https://github.com/Thomasdezeeuw/dotfiles/bash_profile
+# Returns 1 if the branch is dirty, 0 otherwise.
+
+#
+# Note: only works if in a repo.
+is_tree_clean() {
+	git diff --quiet --ignore-submodules HEAD 2> /dev/null
+}
+
+# The current git branch.
+git_branch() {
+	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1 /'
+}
+
+# Exit status is 0 if inside a git repo, 1 otherwise.
+in_git_repo() {
+	git rev-parse --is-inside-work-tree > /dev/null 2> /dev/null
+}
+
+# Get a clean directory for the prompt.
+# When in a git repo this removes everything before the start of the root of the
+# repo, also replaces the home directory with "~".
+prompt_dir() {
+	# Determine if we're in a git repo. If so we get the full path to the repo,
+	# or we'll have an empty string.
+	local GIT_DIR=$(git rev-parse --show-toplevel 2> /dev/null)
+
+	if [ ! -z "$GIT_DIR" ]; then
+		# If we're in a git repo we'll remove the entire path up to the repo
+		# root directory, e.g. given a `GIT_DIR` of "~/src/repo_root" this will
+		# be "~/src/".
+		local GIT_TRIM_DIR=$(printf "$GIT_DIR" | rev | cut -d'/' -f2- | rev)
+		local DIR=$(pwd -P | sed "s#^$GIT_TRIM_DIR/##")
+	else
+		# Replace the home directory path with "~/".
+		local DIR=$(pwd | sed "s#^$HOME#~#")
+	fi
+
+	# Remove the last "/".
+	printf "$DIR" | sed "s/\/$//"
+}
+
+# Set the foreground to a rgb color. Call syntax: `fg_color r255 g255 b255`.
+fg_color() {
+	printf "\[\x1b[38;2;$1;$2;$3m\]"
+}
+
+# The actual prompt.
+prompt_command() {
+	# Get exit code from previous command, get this here otherwise the commands
+	# below will overwrite it.
+	local EXIT=$?
+
+	# Print a new line.
+	printf "\r\n"
+
+	# Start by resetting the colours.
+	PS1="\[\e[0m\]"
+
+	# Show when we're inside Vim.
+	if [ -n "$IN_VIM" ]; then
+		PS1+="$(fg_color 255 165 0)vim "
+	fi
+	# Show orange username@hostname, if in a ssh session.
+	if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+		PS1+="$(fg_color 255 165 0)\u@\h "
+	fi
+
+  # Python virtual environment
+  if [ -n "$VIRTUAL_ENV" ]; then
+    PS1+="$(fg_color 255 204 204)(venv) 🐍 "
+  fi
+
+	PS1+="$(fg_color 93 200 253)$(prompt_dir) " # Blue directory.
+	if in_git_repo; then
+		# Orange pencil if the git tree is dirty.
+		if ! is_tree_clean; then
+			PS1+="$(fg_color 237 168 4)Σ "
+		fi
+		PS1+="$(fg_color 108 108 108)$(git_branch)" # Grey git branch, if in a repo.
+	fi
+
+	# Red on failure of the previous command, green otherwise.
+	if [ $EXIT != 0 ]; then
+		PS1+="$(fg_color 252 93 91)"
+	else
+		PS1+="$(fg_color 98 245 146)"
+	fi
+	PS1+="λ\[\e[0m\] " # A lambda and reset the colors.
+}
+
+# TODO: disable for devbox
+export PROMPT_COMMAND=prompt_command
+
+# No PS2 makes for easier copying.
+export PS2=""
+# Show file and line number when debugging scripts with `set -x`.
+export PS4='+ $0:$LINENO '
+# ---
+
+# Enable bash completion
+[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+
+if [[ -f "$HOME/.bashrc" ]]; then
+  source "$HOME/.bashrc"
+fi
+
+. "$HOME/.cargo/env"
+
+# opam configuration
+# TODO: disable for devbox
+test -r /Users/tranh/.opam/opam-init/init.sh && . /Users/tranh/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/tranh/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
+# Bash built-in complete to generate command /opt/homebrew/bin/packer when typing packer
+# complete -C /opt/homebrew/bin/packer packer
+
+# complete -C /opt/homebrew/bin/terraform terraform
+
+# Configuration options for pyenv
+# This export is needed so that Python runtimes managed by pyenv
+# will be compatible with tools like PyInstaller
+export PYTHON_CONFIGURE_OPTS="--enable-shared"
+eval "$(pyenv init -)"
+
+# Add shims path into the Environment Variables
+# This path is not created by default and it's done
+# to avoid issues down the line.
+export PATH="$PATH:$HOME/.pyenv/shims"
+
+# jenv
+eval "$(jenv init -)"
+
+# Mojo
+export MODULAR_HOME="/Users/tranh/.modular"
+export PATH="/Users/tranh/.modular/pkg/packages.modular.com_mojo/bin:$PATH"

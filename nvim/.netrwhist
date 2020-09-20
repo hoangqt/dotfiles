@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =5
+let g:netrw_dirhist_5='/Users/tranh/micronaut-data/data-runtime/src/main/java/io/micronaut/data/runtime/intercept'
+let g:netrw_dirhist_4='/Users/tranh/micronaut-data/data-runtime/src/main/java/io/micronaut/data/runtime'
+let g:netrw_dirhist_3='/Users/tranh/micronaut-data/data-runtime/src/main/java/io/micronaut/data'
+let g:netrw_dirhist_2='/Users/tranh/micronaut-data/data-runtime/src/main/java/io/micronaut'
+let g:netrw_dirhist_1='/Users/tranh/micronaut-data/data-runtime/src/main/java/io'
+let g:netrw_dirhist_0='/Users/tranh/micronaut-data/data-runtime/src/main/java'
+let g:netrw_dirhist_9='/Users/tranh/micronaut-data/data-runtime/src/main'
+let g:netrw_dirhist_8='/Users/tranh/micronaut-data/data-runtime/src'
+let g:netrw_dirhist_7='/Users/tranh/micronaut-data/data-runtime'
+let g:netrw_dirhist_6='/Users/tranh/micronaut-data'
