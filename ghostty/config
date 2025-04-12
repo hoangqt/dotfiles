@@ -1,4 +1,4 @@
-# ~/Library/Application\ Support/com.mitchellh.ghostty/config
+# MacOS ~/Library/Application\ Support/com.mitchellh.ghostty/config
 theme = catppuccin-macchiato
 font-family = "JetBrainsMono Nerd Font"
 font-size = 15
