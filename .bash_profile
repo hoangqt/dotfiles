@@ -13,7 +13,16 @@ export GOBIN=$GOPATH/bin
 PATH="$GOBIN:$HOME/.rvm/rubies/ruby-3.1.2/bin:$HOME/.rvm/gems/ruby-3.1.2/bin:/usr/local/bin:$HOME/.jenv/bin:$HOME/zls:/usr/local/texlive/2023/bin/universal-darwin":/Applications/Ghostty.app/Contents/MacOS:/nix/var/nix/profiles/default/bin
 export PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/opt/libpq/bin
 
-alias vim="nvim"
+# Aliases
+alias vim='nvim'
+alias vi='nvim'
+alias cat='bat'
+alias preview="fzf --preview 'bat --color always {}'"
+alias j=z
+
+# git aliases
+alias gl='git log --pretty=format:"%C(yellow)%h %C(green)%ar %C(blue)%an %C(reset)%s" --decorate'
+alias glnm='git log --no-merges --pretty=format:"%C(yellow)%h %C(green)%ar %C(blue)%an %C(reset)%s" --decorate'
 
 # Node version manager
 export NVM_DIR="$HOME/.nvm"
@@ -89,6 +98,11 @@ prompt_command() {
 		PS1+="$(fg_color 255 165 0)\u@\h "
 	fi
 
+  # Python virtual environment
+  if [ -n "$VIRTUAL_ENV" ]; then
+    PS1+="$(fg_color 255 204 204)(venv) 🐍 "
+  fi
+
 	PS1+="$(fg_color 93 200 253)$(prompt_dir) " # Blue directory.
 	if in_git_repo; then
 		# Orange pencil if the git tree is dirty.
@@ -121,7 +135,7 @@ eval "$(jenv init -)"
 . "$HOME/.cargo/env"
 
 # opam configuration
-test -r /Users/hoangtran/.opam/opam-init/init.sh && . /Users/hoangtran/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+test -r $HOME/.opam/opam-init/init.sh && . $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
