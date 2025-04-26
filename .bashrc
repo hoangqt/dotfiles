@@ -1,6 +1,5 @@
 # Runs when opens terminal on Linux but MacOS may
 # not follow this convention
-source /Users/tranh/alacritty/extra/completions/alacritty.bash
 alias k=kubectl
 source <(kubectl completion bash)
 complete -F __start_kubectl k
@@ -15,3 +14,5 @@ export NVM_DIR="$HOME/.nvm"
 complete -C /usr/local/bin/terraform terraform
 
 eval "$(direnv hook bash)"
+
+eval "$(zoxide init bash)"
