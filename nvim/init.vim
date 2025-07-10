@@ -215,6 +215,7 @@ endfunction
 set mouse=
 
 " emoji
+" CocInstall coc-emoji markdown
 set completefunc=emoji#complete
 
 " vim-easy-align
@@ -438,6 +439,12 @@ command! -bang -nargs=* Rg
 \ call fzf#vim#grep(
 \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
 \   {'options': fzf#vim#with_preview()["options"] + ['--bind', 'ctrl-a:select-all,ctrl-d:deselect-all']}, <bang>0)
+
+" git grep search
+command! -bang -nargs=* GGrep
+  \ call fzf#vim#grep(
+  \   'git grep --line-number -- '.fzf#shellescape(<q-args>),
+  \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
 
 " Path completion in insert mode
 inoremap <expr> <c-x><c-f> fzf#vim#complete#path('rg --files')
