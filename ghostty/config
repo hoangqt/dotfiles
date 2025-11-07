@@ -1,5 +1,5 @@
-# MacOS ~/Library/Application\ Support/com.mitchellh.ghostty/config
-theme = catppuccin-macchiato
+# ~/Library/Application\ Support/com.mitchellh.ghostty/config
+theme = catppuccin-macchiato.conf
 font-family = "JetBrainsMono Nerd Font"
 font-size = 15
 cursor-style = bar
@@ -12,3 +12,5 @@ window-new-tab-position = end
 # Launch ghostty in maximized mode
 window-width = 2048
 window-height = 2048
+# Workaround to rename tab
+shell-integration-features = no-title
