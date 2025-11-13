@@ -63,12 +63,6 @@
   "jedi.hover.enable": true,
   "jedi.diagnostics.enable": false,
 
-  "languageserver": {
-    "jedi": {
-      "priority": 100
-    }
-  },
-
   "hover.floatConfig": {
     "border": true,
     "rounded": true
