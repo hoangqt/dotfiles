@@ -1,3 +1,9 @@
+# Remove max token limit
+# or export CLAUDE_CODE_MAX_OUTPUT_TOKENS=64000
+unset CLAUDE_CODE_MAX_OUTPUT_TOKENS
+
+# Kiro CLI pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.pre.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.pre.bash"
 export LANG="en_US.UTF-8"
 
 export OPENAI_API_KEY=sk-no-key-required
@@ -8,10 +14,13 @@ export GEM_PATH="$GEM_HOME:$HOME/.rvm/gems/ruby-3.1.2@global"
 
 export GOPATH=$HOME/gocmd
 export GOBIN=$GOPATH/bin
-
 # mactex /usr/local/texlive/2022/bin/universal-darwin
-PATH="$GOBIN:$HOME/.rvm/rubies/ruby-3.1.2/bin:$HOME/.rvm/gems/ruby-3.1.2/bin:/usr/local/bin:$HOME/.jenv/bin:$HOME/zls:/usr/local/texlive/2023/bin/universal-darwin":/Applications/Ghostty.app/Contents/MacOS:/nix/var/nix/profiles/default/bin
+PATH="/usr/local/bin:$GOBIN:$HOME/.jenv/bin:$HOME/zls:/usr/local/texlive/2023/bin/universal-darwin":/Applications/Ghostty.app/Contents/MacOS:/nix/var/nix/profiles/default/bin:/usr/local/anaconda3/bin
+
 export PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/opt/libpq/bin
+
+# Neovim as default editor
+export EDITOR=nvim
 
 # Aliases
 alias vim='nvim'
@@ -137,8 +146,6 @@ eval "$(jenv init -)"
 # opam configuration
 test -r $HOME/.opam/opam-init/init.sh && . $HOME/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
 # direnv
 if [[ -f "$HOME/.bashrc" ]]; then
   source "$HOME/.bashrc"
@@ -148,3 +155,28 @@ complete -C /usr/local/bin/packer packer
 
 # Created by `pipx` on 2023-02-28 16:58:42
 export PATH="$PATH:$HOME/.local/bin"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/usr/local/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/usr/local/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/usr/local/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/usr/local/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+# Kiro CLI post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.post.bash" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/bash_profile.post.bash"
+
+# Added by Antigravity
+export PATH="/Users/hoangtran/.antigravity/antigravity/bin:$PATH"
